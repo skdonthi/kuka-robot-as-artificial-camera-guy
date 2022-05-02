@@ -1,7 +1,6 @@
-import cv2
+# import cv2
 # from PIL import Image, ImageFilter
 # import numpy as np
-
 
 '''
 Used to calculate the mean values of all faces 
@@ -29,7 +28,10 @@ def calculate_Mean(All_Faces):
 def get_Center(values):
     return [int(values[0] + values[2]/2), int(values[1] + values[3]/2)]
 
-
+def check():
+    y = 135.903534
+    z = 691.804626
+    return 10
 '''
 Used to create circle on the image
 return the center values 
@@ -40,7 +42,7 @@ def createCircle(values):
     color = (255, 0, 0)
     thickness = -1
     cv2.circle(img, center_coordinates, radius, color, thickness)
-
+    return center_coordinates
 
 if __name__ == '__main__':
 
@@ -49,10 +51,8 @@ if __name__ == '__main__':
     # cv = cv2.VideoCapture(0)
 
     outer_count = 0
-
     face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
     cap = cv2.VideoCapture(0)
-
     All_Faces = []
     imageRcvdValue = 0
     flag = False
@@ -104,7 +104,13 @@ if __name__ == '__main__':
                 cv2.rectangle(img, (values[0], values[1]), (values[0] + values[2], values[1] + values[3]), (255, 0, 255), 2)
 
                 ######################################
-                createCircle(values)
+                toMove = createCircle(values)
+                ######################################
+                #TODO: Create object of Robot class 
+                # call maethod to move to the values returned by createCircle method
+                # yield and design-pattern:generator
+                ######################################
+                
                 # center_coordinates = (get_Center(values))
                 # radius = 10
                 # color = (255, 0, 0)

@@ -1,5 +1,6 @@
 import time
 from py_openshowvar import openshowvar
+from main2 import check
 
 class RemoteControlKUKA:
 
@@ -52,5 +53,11 @@ class RemoteControlKUKA:
 
 if __name__ == '__main__':
     rck = RemoteControlKUKA()
-    while True:
-        rck.move_lin_e6pos('{X 425.297516,Y 135.903534,Z 691.804626,A -179.973938,B 67.7722855,C -179.862015,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}')
+    y = 135.903534
+    z = 691.804626
+    i = 0
+    while i<5:
+        print('{X 425.297516,Y '+str(y)+',Z '+str(z)+',A -179.973938,B 67.7722855,C -179.862015,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}')
+        y = y + check()
+        i = i + 1
+        rck.move_lin_e6pos('{X 425.297516,Y '+str(y)+',Z '+str(z)+',A -179.973938,B 67.7722855,C -179.862015,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}')
