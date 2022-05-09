@@ -1,6 +1,9 @@
 import cv2
-# https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html#face-detection-using-haar-cascades
-# simple face detection using opencv using haar cascades
+'''
+    Simple face detection using opencv using haar cascades
+    https://opencv24-python-tutorials.readthedocs.io/en/latest/py_tutorials/py_objdetect/py_face_detection/py_face_detection.html#face-detection-using-haar-cascades
+
+'''
 class StaticCamera:
     def __init__ (self, data):
         self.data = data
