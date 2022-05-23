@@ -1,5 +1,5 @@
-from camera import face_detection
-from robot import RemoteControlKUKA
+from bazzler import face_detection
+from robot_integration import RemoteControlKUKA
 import time
 
    

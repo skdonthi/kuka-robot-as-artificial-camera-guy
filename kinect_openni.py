@@ -6,7 +6,7 @@ import numpy as np
 import cv2
 
 
-class StaticPositionedCamera:
+class FixedPositionCamera:
     def __init__(self):
         openni2.initialize() # can also accept the path of the OpenNI redistribution
         dev = openni2.Device.open_any()
@@ -17,7 +17,6 @@ class StaticPositionedCamera:
         self.color_stream.start()
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
-        self.key = None
         
     def get_face_and_depth_info(self):        
         info = []
