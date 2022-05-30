@@ -85,4 +85,3 @@ class RemoteControlKUKA:
     # rck = RemoteControlKUKA()
     # y = 135.903534
     # z = 691.804626
-    # rck.moveTo('{A1 425.297516,A2 '+str(y)+',A3 '+str(z)+',A4 -179.973938,A5 67.7722855,A6 -179.862015,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}')

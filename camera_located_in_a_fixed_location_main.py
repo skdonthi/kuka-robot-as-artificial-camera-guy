@@ -20,7 +20,3 @@ if __name__ == '__main__':
             # rck.moveTo(e6axis2)
         
     camera.close_frames()
-
-
-
-
