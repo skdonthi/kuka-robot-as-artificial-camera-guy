@@ -18,8 +18,20 @@ Movement must be smoothed using any (one) method.
 - Compare both setups mentioned in the base goals.
 
 
-Document for safety workspace:
-in PDF, KUKA System Software
-KUKA System Software 8.3
-Operating and Programming Instructions for System Integrators
-6.11 Configuring workspaces
+###Document for safety workspace:
+	- in PDF, KUKA System Software
+	- KUKA System Software 8.3 (KSS_83_SI_en.pdf)
+	- Operating and Programming Instructions for System Integrators
+	- ### 6.11 Configuring workspaces
+	- In KRC - controller:
+	- Step 1 - Determine Limits:
+		Menu button(on top, a button with robot symbol) -> Display -> Actual position  -> axis- specific
+		Rotate/move all axis and determined project specific limits and note down values
+		
+	- Step 2: Configuring the workspace:
+		Menu -> Configuration -> Miscellenious -> Workspace monitoring -> configuration -> axis-specific -> 
+			Enter name: "cameraguy"
+			put all the axis values (noted from step 1)
+			Mode: "OUTSIDE_STOP"
+		Save
+

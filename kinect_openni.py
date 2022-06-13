@@ -19,7 +19,7 @@ class FixedPositionCamera:
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
         
-    def get_face_and_depth_info(self, isCalibrate): 
+    def get_face_and_depth_info(self): 
         info = []
         depth_frame = self.depth_stream.read_frame()
         depth_data = depth_frame.get_buffer_as_uint16()
@@ -29,9 +29,7 @@ class FixedPositionCamera:
         # print('start=', depth_img[depth_frame.height//2,depth_frame.width//2]) ## access one distance sample from the middle
         color_frame = self.color_stream.read_frame()
         color_data = color_frame.get_buffer_as_uint8()
-        color_img = np.ndarray((color_frame.height, color_frame.width, 3), dtype=np.uint8, buffer=color_data)  
-        if isCalibrate is False:
-            cv2.rectangle(color_img, (270, 190), (270+75, 190+75), (255, 0, 0), 2)
+        color_img = np.ndarray((color_frame.height, color_frame.width, 3), dtype=np.uint8, buffer=color_data)
         # Convert to grayscale
         gray = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
         # Detect the faces
@@ -46,9 +44,8 @@ class FixedPositionCamera:
                 cv2.rectangle(roi_color,(ex,ey),(ex+ew,ey+eh),(0,255,0),2)
             height = int(y+(h/2))
             width = int(x+(w/2))
-            depth = depth_img[height, width]
+            depth = depth_img[height, width]*100
             info.extend([height, width, depth])
-            print(len(info))
         # Display
         cv2.imshow("Color", color_img[...,::-1])
         yield info

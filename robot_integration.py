@@ -58,7 +58,7 @@ class RemoteControlKUKA:
         self._set_action("PTP_E6POS")
         self._wait(block)
     
-    def move_ptp_e6axis(self, e6axis, block=False):
+    def move_ptp_e6axis(self, e6axis, block=True):
         self._set_e6axis(e6axis)
         self._set_action("PTP_E6AXIS")
         self._wait(block)
