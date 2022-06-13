@@ -1,6 +1,5 @@
 import time
 from py_openshowvar import openshowvar
-from camera import check
 
 class RemoteControlKUKA:
 

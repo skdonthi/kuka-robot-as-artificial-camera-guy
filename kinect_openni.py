@@ -5,6 +5,7 @@ from openni import openni2
 import numpy as np
 import cv2
 
+isCalibrate = False
 
 class FixedPositionCamera:
     def __init__(self):
@@ -18,7 +19,7 @@ class FixedPositionCamera:
         self.face_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_frontalface_default.xml')
         self.eye_cascade = cv2.CascadeClassifier(cv2.data.haarcascades + 'haarcascade_eye.xml')
         
-    def get_face_and_depth_info(self):        
+    def get_face_and_depth_info(self, isCalibrate): 
         info = []
         depth_frame = self.depth_stream.read_frame()
         depth_data = depth_frame.get_buffer_as_uint16()
@@ -29,7 +30,8 @@ class FixedPositionCamera:
         color_frame = self.color_stream.read_frame()
         color_data = color_frame.get_buffer_as_uint8()
         color_img = np.ndarray((color_frame.height, color_frame.width, 3), dtype=np.uint8, buffer=color_data)  
-
+        if isCalibrate is False:
+            cv2.rectangle(color_img, (270, 190), (270+75, 190+75), (255, 0, 0), 2)
         # Convert to grayscale
         gray = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
         # Detect the faces
@@ -51,7 +53,7 @@ class FixedPositionCamera:
         cv2.imshow("Color", color_img[...,::-1])
         yield info
         
-    def close_frames():
+    def close_frames(self):
         self.depth_stream.stop()
         self.color_stream.stop()
         openni2.unload()

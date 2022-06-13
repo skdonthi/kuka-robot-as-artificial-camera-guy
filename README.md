@@ -16,3 +16,10 @@ Movement must be smoothed using any (one) method.
 - Try various methods for smoothing movement (e.g. n frames fixed average, n frames moving average, n frames moving median,...), compare them in a scientific manner.
 - Use a depth-sensor (lidar or structured light, available in the Lab) or infer from the detected face size. Move the robot accordingly.
 - Compare both setups mentioned in the base goals.
+
+
+Document for safety workspace:
+in PDF, KUKA System Software
+KUKA System Software 8.3
+Operating and Programming Instructions for System Integrators
+6.11 Configuring workspaces
