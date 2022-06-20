@@ -35,3 +35,8 @@ Movement must be smoothed using any (one) method.
 			Mode: "OUTSIDE_STOP"
 		Save
 
+### KRC usage:
+
+	- Navigator -> R1 -> Program -> select robodkSync -> click on select below
+	- Now, press and hold on forward play button (green color) on KRC display on top -> until program path is reached (in case of notification messages, select "confirm all" or "ok")
+	- Press and hold again and is running

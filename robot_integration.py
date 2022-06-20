@@ -64,8 +64,6 @@ class RemoteControlKUKA:
         self._wait(block)
         
     def moveTo(self,coordinates, flag=True):
-        rck = RemoteControlKUKA()
-        print("robot")
         # print(coordinates)
         # y = 135.903534
         # y = (coordinates[0]-320)/12
@@ -77,7 +75,7 @@ class RemoteControlKUKA:
             # e6axis1 = '{E6AXIS: A1 '+str(y)+', A2 -90.0, A3 100.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
             print(coordinates)
             # print(rck.get_axis())
-            rck.move_ptp_e6axis(coordinates)
+            self.move_ptp_e6axis(coordinates)
             flag = False
             
     # if __name__ == '__main__':

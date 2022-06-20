@@ -2,7 +2,7 @@ import cv2
 # from PIL import Image, ImageFilter
 # import numpy as np
 
-count_For_All_Faces = 10
+count_For_All_Faces = 5
 
 
 def highPassFiltering(img,size):#Transfer parameters are Fourier transform spectrogram and filter size
@@ -76,11 +76,11 @@ def face_detection():
         # Convert to grayscale
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         
-        gray = highPassFiltering(gray, 125)
+        # gray = highPassFiltering(gray, 125)
         
         # Detect the faces
         # faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=6, minSize=(30, 30))
+        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=4, minSize=(70, 70))
         new_X = 0
         new_Y = 0
         new_W = 0
