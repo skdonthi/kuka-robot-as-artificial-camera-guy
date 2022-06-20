@@ -33,7 +33,7 @@ class FixedPositionCamera:
         # Convert to grayscale
         gray = cv2.cvtColor(color_img, cv2.COLOR_BGR2GRAY)
         # Detect the faces
-        faces = self.face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=4, minSize=(70, 70))
+        faces = self.face_cascade.detectMultiScale(gray, 1.3, 5)
         # Draw the rectangle around each face
         for (x, y, w, h) in faces:
             cv2.rectangle(color_img, (x, y), (x+w, y+h), (255, 0, 0), 2)
@@ -45,7 +45,7 @@ class FixedPositionCamera:
             height = int(y+(h/2))
             width = int(x+(w/2))
             depth = depth_img[height, width]*100
-            info.extend([height, width, depth])
+            info.extend([height, width, "{:.2f}".format(depth)])
         # Display
         cv2.imshow("Color", color_img[...,::-1])
         yield info
