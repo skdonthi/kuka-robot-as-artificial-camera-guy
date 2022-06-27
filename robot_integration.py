@@ -63,10 +63,10 @@ class RemoteControlKUKA:
         self._set_action("PTP_E6AXIS")
         self._wait(block)
         
-    def moveTo(self,coordinates, flag=True):
+    def moveTo(self,coordinates, flag=False):
         print("----------------------")
         print(coordinates)
-        self.move_ptp_e6axis(coordinates)
+        self.move_ptp_e6axis(coordinates,flag)
 
     # if __name__ == '__main__':
     # rck = RemoteControlKUKA()

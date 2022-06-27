@@ -80,7 +80,7 @@ def face_detection():
         
         # Detect the faces
         # faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=4, minSize=(70, 70))
+        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
         new_X = 0
         new_Y = 0
         new_W = 0
