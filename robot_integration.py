@@ -64,20 +64,10 @@ class RemoteControlKUKA:
         self._wait(block)
         
     def moveTo(self,coordinates, flag=True):
-        # print(coordinates)
-        # y = 135.903534
-        # y = (coordinates[0]-320)/12
-        # z = 887.51    
-        # e6pos1 = '{X 425.297516,Y '+str(y)+',Z '+str(z)+',A -179.973938,B 67.7722855,C -179.862015,S 6,T 27,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}'
-        # e6pos1 = '{A1 425.297516,A2 '+str(y)+',A3 '+str(z)+',A4 -179.973938,A5 67.7722855,A6 -179.862015,E1 0.0,E2 0.0,E3 0.0,E4 0.0,E5 0.0,E6 0.0}'
+        print("----------------------")
+        print(coordinates)
+        self.move_ptp_e6axis(coordinates)
 
-        while flag:
-            # e6axis1 = '{E6AXIS: A1 '+str(y)+', A2 -90.0, A3 100.0, A4 0.0, A5 0.0, A6 0.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
-            print(coordinates)
-            # print(rck.get_axis())
-            self.move_ptp_e6axis(coordinates)
-            flag = False
-            
     # if __name__ == '__main__':
     # rck = RemoteControlKUKA()
     # y = 135.903534

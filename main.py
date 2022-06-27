@@ -22,6 +22,8 @@ def convertRadiansIntoDegrees(x):
     return degree
 
 if __name__ == '__main__':
+    if sys.argv[1] == 1:
+        camera = FixedPositionCamera() 
     distanceRtoC = 160 # int(sys.argv[1]) // 230, 200
     distanceCtoP = 200 # int(sys.argv[2]) # This value is depth from camera
     distanceRtoP = 200 # int(sys.argv[3])
@@ -50,30 +52,39 @@ if __name__ == '__main__':
     A1 = 0
     A2 = -90
     # A3 = 90
-    rck.moveTo(home)    
-    camera = FixedPositionCamera()     
-    while key != ord('q'):
-        if sys.argv[1] == 1:        
-            for info in camera.get_face_and_depth_info():
-                print('info = ', info)
-                key = cv2.waitKey(1) & 0xFF
-                if len(info) == 3:
-                    # new_height = (info[0] - camera_center[0]) * height_cm_to_px_ratio
-                    new_width = ((info[1]- camera_center[1]) * width_cm_to_px_ratio) / height_scaling_factor
-                    new_depth = (info[2] - distanceCtoP) / width_scaling_factor
-                    # when camera is at angle 40 degree, depth is A1, width is A2, height is A3
-                    e6axis2 = '{E6AXIS: A1 '+ "{0:.1f}".format(A1 + new_depth) +', A2 '+ "{0:.1f}".format(A2 + new_width) +', A3 90, A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
-                    print('e6axis2: ',e6axis2)
-                    rck.moveTo(e6axis2)
-        if sys.argv[1] == 2: 
+    rck.moveTo(home)
+    if sys.argv[1] == '1':     
+        while key != ord('q'):
+                       
+                for info in camera.get_face_and_depth_info():
+                    print('info = ', info)
+                    key = cv2.waitKey(1) & 0xFF
+                    if len(info) == 3:
+                        # new_height = (info[0] - camera_center[0]) * height_cm_to_px_ratio
+                        new_width = ((info[1]- camera_center[1]) * width_cm_to_px_ratio) / height_scaling_factor
+                        new_depth = (info[2] - distanceCtoP) / width_scaling_factor
+                        # when camera is at angle 40 degree, depth is A1, width is A2, height is A3
+                        e6axis2 = '{E6AXIS: A1 '+ "{0:.1f}".format(A1 + new_depth) +', A2 '+ "{0:.1f}".format(A2 + new_width) +', A3 90, A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
+                        print('e6axis2: ',e6axis2)
+                        rck.moveTo(e6axis2)
+                camera.close_frames()
+    if sys.argv[1] == '2':    
+        x=0
+        z=100
+
+        while True:
             for position in face_detection():
+                print("main")
+                print(position)
                 x = x+(position[0]-320)/12
                 # z = 100-((position[1]-225)/8.75)
-                z = max(min(100-((position[1]-225)/8.75), 120), 70)
+                z = max(min(100-((225-position[1])/8.75), 120), 70)
                 e6axis1 = '{E6AXIS: A1 '+str(x)+', A2 -90.0, A3 90.0, A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
                 e6axis2 = '{E6AXIS: A1 '+str(x)+', A2 -90.0, A3 '+str("{:.2f}".format(z))+', A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
+                print("----------------------")
                 print(e6axis2)
+                # time.sleep(5)
                 print(position)
-                rck.moveTo(e6axis2)
-            camera.close_frames()
+                rck.moveTo(e6axis2,x,y)
+            
 

@@ -63,7 +63,7 @@ if __name__ == '__main__':
             if len(info) == 3:
                 new_height = (info[0] - camera_center[0]) * height_cm_to_px_ratio
                 new_width = ((info[1]- camera_center[1]) * width_cm_to_px_ratio) / height_scaling_factor
-                new_depth = (info[2] - distanceCtoP) / width_scaling_factor
+                new_depth = (float(info[2]) - distanceCtoP) / width_scaling_factor
                 # when camera is at angle 40 degree, depth is A1, width is A2, height is A3
                 e6axis2 = '{E6AXIS: A1 '+ str("{:.2f}".format(A1+new_depth)) +', A2 '+ str("{:.2f}".format(A2+new_width)) +', A3 90, A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
                 print('e6axis2: ',e6axis2)
