@@ -45,7 +45,7 @@ class FixedPositionCamera:
             height = int(y+(h/2))
             width = int(x+(w/2))
             depth = depth_img[height, width]*100
-            info.extend([height, width, "{:.2f}".format(depth)])
+            info.extend([height, width, float("{:.2f}".format(depth))])
         # Display
         cv2.imshow("Color", color_img[...,::-1])
         yield info
