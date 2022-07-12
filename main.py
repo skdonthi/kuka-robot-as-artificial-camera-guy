@@ -1,6 +1,6 @@
 from robot_integration import RemoteControlKUKA
 from kinect_openni import FixedPositionCamera
-from basler import face_detection, face_detection_without_Queue
+from konftel_cam20 import face_detection, face_detection_without_Queue
 import time
 import cv2
 import math
@@ -11,9 +11,9 @@ def calcAngle(a, b, c):
     if a != 0 and b != 0 and c != 0:
         length3 = (math.pow(a, 2) + math.pow(b,2) - math.pow(c, 2))/(2*a*b)
         angle = math.acos(length3)
-        print("Angle in Radians:", angle)
+        #print("Angle in Radians:", angle)
         angleInDegrees = convertRadiansIntoDegrees(angle)
-        print("Angle in Degrees:", angleInDegrees)
+        #print("Angle in Degrees:", angleInDegrees)
         return angleInDegrees
         
 def convertRadiansIntoDegrees(x):
@@ -59,24 +59,21 @@ if __name__ == '__main__':
         
         while key != ord('q'):
             for info in camera.get_face_and_depth_info():
-                print('info = ', info)
+                #print('info = ', info)
                 key = cv2.waitKey(1) & 0xFF
-                if len(info) == 3:
+                if len(info) == 3 and rck.is_idle():
                     if(info[2]<500 and info[2]>30):
                         new_depth = (info[2] - distanceCtoP) / width_scaling_factor
-                    else: 
-                        new_depth = distanceCtoP
+                    # else: 
+                    #    new_depth = distanceCtoP
                     new_width = ((info[1]- camera_center[1]) * width_cm_to_px_ratio) / height_scaling_factor
                     new_height = (info[0] - camera_center[0]) * height_cm_to_px_ratio
                     
                     A3 = (A2 + new_width)*(-1)
-                    print('new height: ',new_height)
-                    # when camera is at angle 40 degree, depth is A1, width is A2, height is A3
+                    #print('new height: ',new_height)
+                    # when camera is at angle 40 degree, depth is A1, width is A2, height is A3                    
                     e6axis3 = '{E6AXIS: A1 '+ "{0:.1f}".format(A1 + new_depth) +', A2 '+ "{0:.1f}".format(A2 + new_width) +', A3 '+"{0:.1f}".format(A3)+', A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
-                    print('e6axis2: ',e6axis3)
-
-
-                    e6axis2 = '{E6AXIS: A1 '+ "{0:.1f}".format(A1 + new_depth) +', A2 '+ "{0:.1f}".format(A2 + new_width) +', A3 90, A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
+                    print(e6axis3)
                     rck.moveTo(e6axis3)
         camera.close_frames()
     if sys.argv[1] == '2':    
@@ -84,18 +81,18 @@ if __name__ == '__main__':
         z=100
         while True:
             for position in face_detection():
-                print("main")
-                print(position)
-                print('x '+str(x)+' z '+str(z))
-                print('idle '+str(rck.is_idle()))
+                #print("main")
+                #print(position)
+                #print('x '+str(x)+' z '+str(z))
+                #print('idle '+str(rck.is_idle()))
                 if(rck.is_idle()):
-                    print('entered loop')
+                    #print('entered loop')
                     # x = x+(position[0]-320)/12
                     x = x+((position[0] - 320)/12)
                     z = z+((position[1]-240)/8.75)
                     # z = max(min(100-((position[1]-225)/8.75), 120), 70)
                     e6axis2 = '{E6AXIS: A1 '+str(x)+', A2 -90.0, A3 '+str("{:.2f}".format(z))+', A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
-                    print(e6axis2)
+                    #print(e6axis2)
                     rck.moveTo(e6axis2)
 
     if sys.argv[1] == '3':    
@@ -103,18 +100,18 @@ if __name__ == '__main__':
         z=100
         while True:
             for position in face_detection_without_Queue():
-                print("main")
-                print(position)
-                print('x '+str(x)+' z '+str(z))
-                print('idle '+str(rck.is_idle()))
+                #print("main")
+                #print(position)
+                #print('x '+str(x)+' z '+str(z))
+                #print('idle '+str(rck.is_idle()))
                 if(rck.is_idle()):
-                    print('entered loop')
+                    #print('entered loop')
                     # x = x+(position[0]-320)/12
                     x = x+((position[0] - 320)/12)
                     z = z+((position[1]-240)/8.75)
                     # z = max(min(100-((position[1]-225)/8.75), 120), 70)
                     e6axis2 = '{E6AXIS: A1 '+str(x)+', A2 -90.0, A3 '+str("{:.2f}".format(z))+', A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
-                    print(e6axis2)
+                    #print(e6axis2)
                     rck.moveTo(e6axis2)
 
 

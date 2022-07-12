@@ -1,4 +1,4 @@
-from basler import face_detection
+from konftel_cam20 import face_detection
 from robot_integration import RemoteControlKUKA
 import time
 

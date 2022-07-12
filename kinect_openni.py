@@ -4,14 +4,14 @@
 from openni import openni2
 import numpy as np
 import cv2
+import time
 
 isCalibrate = False
-
+onLoadTime = None
 class FixedPositionCamera:
     def __init__(self):
         openni2.initialize() # can also accept the path of the OpenNI redistribution
-        dev = openni2.Device.open_any()
-        print(dev.get_device_info())        
+        dev = openni2.Device.open_any()       
         self.depth_stream = dev.create_depth_stream()
         self.depth_stream.start()
         self.color_stream = dev.create_color_stream()
@@ -47,7 +47,7 @@ class FixedPositionCamera:
             depth = depth_img[height, width]*100
             info.extend([height, width, float("{:.2f}".format(depth))])
         # Display
-        cv2.imshow("Color", color_img[...,::-1])
+        cv2.imshow("Color", color_img[...,::-1])    
         yield info
         
     def close_frames(self):

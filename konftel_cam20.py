@@ -2,7 +2,7 @@ import cv2
 # from PIL import Image, ImageFilter
 # import numpy as np
 
-count_For_All_Faces = 10 
+count_For_All_Faces = 10
 IsFirstIteration = True
 
 def highPassFiltering(img,size):#Transfer parameters are Fourier transform spectrogram and filter size
@@ -80,7 +80,7 @@ def face_detection():
 
         # Detect the faces
         # faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
+        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=10, minSize=(20, 20))
         new_X = 0
         new_Y = 0
         new_W = 0
@@ -98,7 +98,7 @@ def face_detection():
                 # Number of faces detected
                 count += 1
                 cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
-            # print(faces)
+            # #print((faces)
 
         # Check if there is a face in the frame
         if count != 0:
@@ -126,8 +126,8 @@ def face_detection():
 
                 ######################################
                 toMove = createCircle(values, img)
-                print("coordinates sent from camera")
-                print(toMove)
+                #print(("coordinates sent from camera")
+                #print((toMove)
                 readingIsReady = False
                 yield toMove
                 ######################################
@@ -181,7 +181,7 @@ def face_detection_without_Queue():
         
         # Detect the faces
         # faces = face_cascade.detectMultiScale(gray, 1.1, 4)
-        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=4, minSize=(30, 30))
+        faces = face_cascade.detectMultiScale(image=gray, scaleFactor=1.1, minNeighbors=20, minSize=(40, 40))
         new_X = 0
         new_Y = 0
         new_W = 0
@@ -196,7 +196,7 @@ def face_detection_without_Queue():
             # Number of faces detected
             count += 1
             cv2.rectangle(img, (x, y), (x + w, y + h), (255, 0, 255), 2)
-            # print(faces)
+            # #print((faces)
 
         # Check if there is a face in the frame
         if count != 0:
@@ -218,8 +218,8 @@ def face_detection_without_Queue():
 
                 ######################################
                 toMove = createCircle(values, img)
-                print("coordinates sent from camera")
-                print(toMove)
+                #print(("coordinates sent from camera")
+                #print((toMove)
                 readingIsReady = False
                 yield toMove
                 ######################################
