@@ -36,7 +36,7 @@ if __name__ == '__main__':
         distanceRtoP = 200 # int(sys.argv[3])
         cameraAngle = calcAngle(distanceCtoP, distanceRtoC, distanceRtoP)
         # in centimeters
-        realword_dimensions = { 
+        realworld_dimensions = { 
             "height": 200,
             "width" : 400
         }
@@ -49,8 +49,8 @@ if __name__ == '__main__':
 
         camera_center = (camera_dimensions['height']/2, camera_dimensions['width']/2)
         # converting camera resolution (in px) to real world co-ordinates
-        height_cm_to_px_ratio = realword_dimensions['height'] / camera_dimensions['height']
-        width_cm_to_px_ratio = realword_dimensions['width'] / camera_dimensions['width']
+        height_cm_to_px_ratio = realworld_dimensions['height'] / camera_dimensions['height']
+        width_cm_to_px_ratio = realworld_dimensions['width'] / camera_dimensions['width']
         
         
         height_scaling_factor = int(height_cm_to_px_ratio * 10)
@@ -113,5 +113,46 @@ if __name__ == '__main__':
                     e6axis2 = '{E6AXIS: A1 '+str(x)+', A2 -90.0, A3 '+str("{:.2f}".format(z))+', A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
                     #print(e6axis2)
                     rck.moveTo(e6axis2)
+    if sys.argv[1] == '4':
+        camera = FixedPositionCamera() 
+        min_distance = 210
+        realworld_dimensions = { 
+            "height": 200,
+            "width" : 600,
+            "depth_max" : 320,
+            "depth_min" : 100
+        }
+
+        # in px
+        camera_dimensions = { 
+            "height": 345,
+            "width" : 640
+        }
+
+        camera_center = (((camera_dimensions['height']/2)), camera_dimensions['width']/2)
+        # converting camera resolution (in px) to real world co-ordinates
+        height_cm_to_px_ratio = realworld_dimensions['height'] / camera_dimensions['height']
+        width_cm_to_px_ratio = realworld_dimensions['width'] / camera_dimensions['width']
+        
+        depth_scaling_factor = (realworld_dimensions['depth_max'] - realworld_dimensions['depth_min'])/100
+        height_scaling_factor = int(height_cm_to_px_ratio * 15)
+        width_scaling_factor = int(width_cm_to_px_ratio * 10)
+        
+        while key != ord('q'):
+            for info in camera.get_face_and_depth_info():
+                print('info = ', info)
+                key = cv2.waitKey(1) & 0xFF
+                if len(info) == 3 and rck.is_idle():
+                    new_width = ((info[1] - camera_center[1]) / width_scaling_factor)*(-1)
+                    new_depth = (info[2]- min_distance)/depth_scaling_factor
+                    new_height = (info[0]- camera_center[0])/ height_scaling_factor
+                    
+                    A3 = (A2 + new_depth)*(-1)
+                    #print('new height: ',new_height)
+                    # when camera is at angle 40 degree, depth is A1, width is A2, height is A3                    
+                    e6axis3 = '{E6AXIS: A1 '+ "{0:.1f}".format(A1 + new_width) +', A2 '+ "{0:.1f}".format(A2 + new_depth) +', A3 '+"{0:.1f}".format(A3+new_height)+', A4 0.0, A5 -90.0, A6 270.0, E1 0.0, E2 0.0, E3 0.0, E4 0.0, E5 0.0, E6 0.0}'
+                    print(e6axis3)
+                    rck.moveTo(e6axis3)
+        camera.close_frames()
 
 
